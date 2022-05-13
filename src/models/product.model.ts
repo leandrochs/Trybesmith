@@ -17,13 +17,13 @@ export default class ProductModel {
   }
 
   public async create(product: Product): Promise<Product> {
-    const { title, price, author, isbn } = product;
+    const { name, amount } = product;
     const result = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO books (title, price, author, isbn) VALUES (?, ?, ?, ?)',
-      [title, price, author, isbn],
+      'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)',
+      [name, amount],
     );
     const [dataInserted] = result;
     const { insertId } = dataInserted;
-    return { id: insertId, ...product };
+    return { id: insertId, name, amount };
   }
 }

@@ -58,6 +58,9 @@ var ProductService = /** @class */ (function () {
             });
         });
     };
+    ProductService.prototype.create = function (product) {
+        return this.model.create(product);
+    };
     return ProductService;
 }());
 exports.default = ProductService;

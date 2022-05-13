@@ -57,6 +57,20 @@ var ProductController = /** @class */ (function () {
                 }
             });
         }); };
+        this.create = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var product, productCreated;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        product = req.body;
+                        return [4 /*yield*/, this.productService.create(product)];
+                    case 1:
+                        productCreated = _a.sent();
+                        res.status(201).json(productCreated);
+                        return [2 /*return*/];
+                }
+            });
+        }); };
     }
     return ProductController;
 }());

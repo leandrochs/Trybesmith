@@ -54,6 +54,23 @@ var ProductModel = /** @class */ (function () {
             });
         });
     };
+    ProductModel.prototype.create = function (product) {
+        return __awaiter(this, void 0, void 0, function () {
+            var name, amount, result, dataInserted, insertId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        name = product.name, amount = product.amount;
+                        return [4 /*yield*/, this.connection.execute('INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)', [name, amount])];
+                    case 1:
+                        result = _a.sent();
+                        dataInserted = result[0];
+                        insertId = dataInserted.insertId;
+                        return [2 /*return*/, { id: insertId, name: name, amount: amount }];
+                }
+            });
+        });
+    };
     return ProductModel;
 }());
 exports.default = ProductModel;
