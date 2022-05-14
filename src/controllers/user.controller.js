@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46,42 +35,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var ProductModel = /** @class */ (function () {
-    function ProductModel(connection) {
-        this.connection = connection;
-    }
-    ProductModel.prototype.getAll = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var result, rows;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.execute('SELECT * FROM Trybesmith.Products')];
-                    case 1:
-                        result = _a.sent();
-                        rows = result[0];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    ProductModel.prototype.create = function (product) {
-        return __awaiter(this, void 0, void 0, function () {
-            var name, amount, result, dataInserted, insertId;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var user_services_1 = __importDefault(require("../services/user.services"));
+var UserController = /** @class */ (function () {
+    function UserController(userService) {
+        var _this = this;
+        if (userService === void 0) { userService = new user_services_1.default(); }
+        this.userService = userService;
+        this.create = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var user, userCreated, token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        name = product.name, amount = product.amount;
-                        return [4 /*yield*/, this.connection.execute('INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)', [name, amount])];
+                        user = req.body;
+                        return [4 /*yield*/, this.userService.create(user)];
                     case 1:
-                        result = _a.sent();
-                        dataInserted = result[0];
-                        insertId = dataInserted.insertId;
-                        return [2 /*return*/, __assign({ id: insertId }, product)];
+                        userCreated = _a.sent();
+                        if (userCreated) {
+                            token = jsonwebtoken_1.default.sign({ id: userCreated.id }, 'superSecret', {
+                                algorithm: 'HS256',
+                                expiresIn: '10d',
+                            });
+                            return [2 /*return*/, res.status(201).json({ token: token })];
+                        }
+                        return [2 /*return*/];
                 }
             });
-        });
-    };
-    return ProductModel;
+        }); };
+    }
+    return UserController;
 }());
-exports.default = ProductModel;
+exports.default = UserController;

@@ -24,6 +24,6 @@ export default class ProductModel {
     );
     const [dataInserted] = result;
     const { insertId } = dataInserted;
-    return { id: insertId, name, amount };
+    return { id: insertId, ...product };
   }
 }

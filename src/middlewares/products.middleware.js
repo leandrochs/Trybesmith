@@ -46,9 +46,7 @@ function validationBook(req, res, next) {
     }
     _b = validateValues(product), valid = _b[0], property = _b[1];
     if (!valid) {
-        return res
-            .status(422)
-            .json({
+        return res.status(422).json({
             message: "\"" + property + "\" length must be at least 3 characters long",
         });
     }

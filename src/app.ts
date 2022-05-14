@@ -1,5 +1,8 @@
 import express, { Request, Response, Router } from 'express';
 import ProductController from './controllers/product.controller';
+import UserController from './controllers/user.controller';
+import validationProduct from './middlewares/products.middleware';
+import validationUser from './middlewares/users.middleware';
 
 const app = express();
 const router = Router();
@@ -12,9 +15,11 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 const productController = new ProductController();
+const userController = new UserController();
 
 app.get('/products', productController.getAll);
-app.post('/products', productController.create);
+app.post('/products', validationProduct, productController.create);
+app.post('/users', validationUser, userController.create);
 
 //
 export default app;

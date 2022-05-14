@@ -47,41 +47,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ProductModel = /** @class */ (function () {
-    function ProductModel(connection) {
+var UserModel = /** @class */ (function () {
+    function UserModel(connection) {
         this.connection = connection;
     }
-    ProductModel.prototype.getAll = function () {
+    UserModel.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var result, rows;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.execute('SELECT * FROM Trybesmith.Products')];
-                    case 1:
-                        result = _a.sent();
-                        rows = result[0];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    ProductModel.prototype.create = function (product) {
-        return __awaiter(this, void 0, void 0, function () {
-            var name, amount, result, dataInserted, insertId;
+            var username, classe, level, password, result, dataInserted, insertId;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        name = product.name, amount = product.amount;
-                        return [4 /*yield*/, this.connection.execute('INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)', [name, amount])];
+                        username = user.username, classe = user.classe, level = user.level, password = user.password;
+                        return [4 /*yield*/, this.connection.execute('INSERT INTO Trybesmith.Users (username, classe, level, password) VALUES (?, ?, ?, ?)', [username, classe, level, password])];
                     case 1:
                         result = _a.sent();
                         dataInserted = result[0];
                         insertId = dataInserted.insertId;
-                        return [2 /*return*/, __assign({ id: insertId }, product)];
+                        return [2 /*return*/, __assign({ id: insertId }, user)];
                 }
             });
         });
     };
-    return ProductModel;
+    return UserModel;
 }());
-exports.default = ProductModel;
+exports.default = UserModel;

@@ -24,6 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importStar(require("express"));
 var product_controller_1 = __importDefault(require("./controllers/product.controller"));
+var user_controller_1 = __importDefault(require("./controllers/user.controller"));
+var products_middleware_1 = __importDefault(require("./middlewares/products.middleware"));
+var users_middleware_1 = __importDefault(require("./middlewares/users.middleware"));
 var app = (0, express_1.default)();
 var router = (0, express_1.Router)();
 app.use(router);
@@ -33,7 +36,9 @@ app.get('/', function (req, res) {
     res.status(200).send('Express and TypeScript');
 });
 var productController = new product_controller_1.default();
+var userController = new user_controller_1.default();
 app.get('/products', productController.getAll);
-app.post('/products', productController.create);
+app.post('/products', products_middleware_1.default, productController.create);
+app.post('/users', users_middleware_1.default, userController.create);
 //
 exports.default = app;
