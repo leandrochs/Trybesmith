@@ -6,6 +6,7 @@ import LoginController from './controllers/login.controller';
 import validationProduct from './middlewares/products.middleware';
 import validationUser from './middlewares/users.middleware';
 import validationLoginData from './middlewares/login.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 
 const app = express();
 const router = Router();
@@ -26,6 +27,7 @@ app.get('/products', productController.getAll);
 app.post('/products', validationProduct, productController.create);
 app.post('/users', validationUser, userController.create);
 app.get('/orders', orderController.getAll);
+app.post('/orders', authMiddleware, orderController.create);
 app.post('/login', validationLoginData, loginController.getByUsernameAndPassword);
 
 //
