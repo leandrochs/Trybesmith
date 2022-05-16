@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importStar(require("express"));
 var product_controller_1 = __importDefault(require("./controllers/product.controller"));
 var user_controller_1 = __importDefault(require("./controllers/user.controller"));
+var order_controller_1 = __importDefault(require("./controllers/order.controller"));
 var products_middleware_1 = __importDefault(require("./middlewares/products.middleware"));
 var users_middleware_1 = __importDefault(require("./middlewares/users.middleware"));
 var app = (0, express_1.default)();
@@ -37,8 +38,10 @@ app.get('/', function (req, res) {
 });
 var productController = new product_controller_1.default();
 var userController = new user_controller_1.default();
+var orderController = new order_controller_1.default();
 app.get('/products', productController.getAll);
 app.post('/products', products_middleware_1.default, productController.create);
 app.post('/users', users_middleware_1.default, userController.create);
+app.get('/orders', orderController.getAll);
 //
 exports.default = app;
