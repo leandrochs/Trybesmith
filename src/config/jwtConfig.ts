@@ -1,8 +1,4 @@
-type JwsConfig = {
-  secret: string;
-  configs: object;
-  userId?: number
-};
+import JwsConfig from '../interfaces/jwsConfig.interface';
 
 const jwsConfig: JwsConfig = {
   secret: 'superSecret',

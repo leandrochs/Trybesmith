@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 
@@ -9,11 +9,9 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
 
   const decoded = jwt.verify(token, jwtConfig.secret);
 
-  console.log('decoded: ', decoded);
-  // const { userId } = decoded;
-  // console.log('userId: ', userId);
+  if (!decoded) return res.status(401).json({ message: 'Invalid token' });
 
-  req.user = decoded;
+  req.body = { ...req.body, decoded };
 
   next();
 }

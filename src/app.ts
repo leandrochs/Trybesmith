@@ -6,6 +6,7 @@ import LoginController from './controllers/login.controller';
 import validationProduct from './middlewares/products.middleware';
 import validationUser from './middlewares/users.middleware';
 import validationLoginData from './middlewares/login.middleware';
+import validationOrderData from './middlewares/order.middleware';
 import authMiddleware from './middlewares/auth.middleware';
 
 const app = express();
