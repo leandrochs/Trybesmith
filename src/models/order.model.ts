@@ -24,27 +24,21 @@ export default class OrderModel {
   }
 
   public async create(order: Order): Promise<Order> {
-    const { productsIds } = order;
+    const { userId, productsIds } = order;
 
-    // const result = productsIds.map(async (productId) => {
-    await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO Trybesmith.Orders (productId) VALUES (?)',
-      [productsIds],
+    const resultUser = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
+      [userId],
     );
-    // });
-    // const [dataInserted] = result;
-    // const { insertId } = dataInserted;
-    return { productsIds };
+
+    const [dataInserted] = resultUser;
+    const { insertId } = dataInserted;
+
+    await this.connection.execute<ResultSetHeader>(
+      'UPDATE Trybesmith.Products SET orderId = ? WHERE (id = ?)',
+      [insertId, ...productsIds],
+    );
+
+    return { userId, productsIds };
   }
 }
-
-// public async create(product: Product): Promise<Product> {
-//   const { name, amount } = product;
-//   const result = await this.connection.execute<ResultSetHeader>(
-//     'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)',
-//     [name, amount],
-//   );
-//   const [dataInserted] = result;
-//   const { insertId } = dataInserted;
-//   return { id: insertId, ...product };
-// }

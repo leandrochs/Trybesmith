@@ -4,7 +4,6 @@ import Order from '../interfaces/order.interface';
 // productsIds: array;
 
 function validationBook(req: Request, res: Response, next: NextFunction) {
-  // const order: Order = req.body;
   const { productsIds }: Order = req.body;
 
   if (!productsIds) {
@@ -16,9 +15,7 @@ function validationBook(req: Request, res: Response, next: NextFunction) {
   }
 
   if (productsIds.length === 0) {
-    return res
-      .status(422)
-      .json({ message: '"productsIds" must include only numbers' });
+    return res.status(422).json({ message: '"productsIds" must include only numbers' });
   }
 
   next();

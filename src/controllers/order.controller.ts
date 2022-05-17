@@ -10,29 +10,15 @@ class OrderController {
   };
 
   public create = async (req: Request, res: Response) => {
-    const order = req.body;
-    const orderCreated = await this.orderService.create(order);
+    const { decoded, productsIds } = req.body;
+    const { userId } = decoded;
+
+    const orderCreated = await this.orderService.create({
+      userId,
+      productsIds,
+    });
     res.status(201).json(orderCreated);
   };
 }
 
 export default OrderController;
-
-
-// const create = async (req, res) => {
-//   try {
-//     const { title, content, categoryIds } = req.body;
-//     const userId = req.user.id;
-
-//     const blogPost = await BlogPostService.create({ title, content, categoryIds, userId });
-
-//     if (blogPost.message && blogPost.message.indexOf('a foreign key constraint fails') !== -1) {
-//       return res.status(400).json({ message: '"categoryIds" not found' });
-//     }
-    
-//     return res.status(201).json(blogPost);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json(defaultServerErrorMessage);
-//   }
-// };
