@@ -28,7 +28,7 @@ app.get('/products', productController.getAll);
 app.post('/products', validationProduct, productController.create);
 app.post('/users', validationUser, userController.create);
 app.get('/orders', orderController.getAll);
-app.post('/orders', authMiddleware, orderController.create);
+app.post('/orders', authMiddleware, validationOrderData, orderController.create);
 app.post('/login', validationLoginData, loginController.getByUsernameAndPassword);
 
 //

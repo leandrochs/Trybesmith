@@ -1,6 +1,5 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import Order from '../interfaces/order.interface';
-import CreateOrder from '../interfaces/createOrder.interface';
 
 export default class OrderModel {
   public connection: Pool;
@@ -24,8 +23,8 @@ export default class OrderModel {
     return rows as Order[];
   }
 
-  public async create(createOrder: CreateOrder): Promise<CreateOrder> {
-    const { productsIds } = createOrder;
+  public async create(order: Order): Promise<Order> {
+    const { productsIds } = order;
 
     // const result = productsIds.map(async (productId) => {
     await this.connection.execute<ResultSetHeader>(

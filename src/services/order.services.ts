@@ -1,7 +1,6 @@
 import connection from '../models/connection';
 import OrderModel from '../models/order.model';
 import Order from '../interfaces/order.interface';
-import CreateOrder from '../interfaces/createOrder.interface';
 
 class OrderService {
   public model: OrderModel;
@@ -15,8 +14,8 @@ class OrderService {
     return orders;
   }
 
-  public create(createOrder: CreateOrder): Promise<CreateOrder> {
-    return this.model.create(createOrder);
+  public create(order: Order): Promise<Order> {
+    return this.model.create(order);
   }
 }
 

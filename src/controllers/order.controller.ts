@@ -10,8 +10,8 @@ class OrderController {
   };
 
   public create = async (req: Request, res: Response) => {
-    const createOrder = req.body;
-    const orderCreated = await this.orderService.create(createOrder);
+    const order = req.body;
+    const orderCreated = await this.orderService.create(order);
     res.status(201).json(orderCreated);
   };
 }

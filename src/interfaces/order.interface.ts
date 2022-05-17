@@ -1,6 +1,6 @@
 interface Order {
   id?: number;
-  userId: number;
+  userId?: number;
   productsIds: number[];
 }
 

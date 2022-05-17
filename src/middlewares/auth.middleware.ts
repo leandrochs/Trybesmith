@@ -7,9 +7,13 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
 
   if (!token) return res.status(401).json({ message: 'Token not found' });
 
-  const decoded = jwt.verify(token, jwtConfig.secret);
+  let decoded;
 
-  if (!decoded) return res.status(401).json({ message: 'Invalid token' });
+  try {
+    decoded = jwt.verify(token, jwtConfig.secret);
+  } catch (e) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
 
   req.body = { ...req.body, decoded };
 
